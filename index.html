@@ -1,96 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pet-Friendly City - Home</title>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>App Learning Chatbot</title>
+  <style>
+    /* Background animation */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #53354a);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
 
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    .chat-container {
+      width: 90%;
+      max-width: 400px;
+      height: 90vh;
+      background-color: rgba(0, 0, 0, 0.4);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+    }
+
+    /* RGB border */
+    .chat-container::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      z-index: -1;
+      background: linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet, red);
+      background-size: 400% 400%;
+      animation: rgbBorder 10s linear infinite;
+      border-radius: 25px;
+    }
+
+    @keyframes rgbBorder {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .chat-header {
+      padding: 15px;
+      background: #222;
+      text-align: center;
+      font-weight: bold;
+      font-size: 20px;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+    }
+
+    .chat-box {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message {
+      margin-bottom: 10px;
+      max-width: 80%;
+      padding: 10px 15px;
+      border-radius: 15px;
+      line-height: 1.4;
+    }
+
+    .bot {
+      align-self: flex-start;
+      background-color: #30475e;
+    }
+
+    .user {
+      align-self: flex-end;
+      background-color: #f05454;
+      color: white;
+    }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #444;
+    }
+
+    input {
+      flex: 1;
+      padding: 15px;
+      border: none;
+      border-radius: 0 0 0 20px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    button {
+      padding: 15px 20px;
+      border: none;
+      background-color: #ff4c60;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 0 0 20px 0;
+    }
+
+    @media (max-width: 500px) {
+      .chat-container {
+        height: 95vh;
+        border-radius: 15px;
+      }
+
+      .chat-container::before {
+        border-radius: 18px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-    <div class="logo">🐾 Pet-Friendly City</div>
-    <ul class="nav-links">
-      <li><a href=".hero">Home</a></li>
-      <li><a href="#Learn">About</a></li>
-      <li><a href="#volunteer">Volunteer</a></li>
-      <li><a href="#stories">Impact Stories</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content" id="myText">
-      <h1 >Making Cities <span>Paw-some!</span> 🐶✨</h1>
-      <p>Be the reason tails wag across your city. Volunteer today!</p>
-      <div class="hero-buttons">
-        <a href="#volunteer" class="btn">Join the Movement</a>
-        <a href="#Learn" class="btn btn-secondary">Learn More</a>
-      </div>
-    </div>
-  </section>
-<!-- aboutsection -->
- <section class="about" id="Learn">
-  <h2>🐾 About Pet-Friendly City</h2>
-  <p>
-    Pet-Friendly City is a volunteer-driven campaign that dreams of cities where street animals are protected, loved, and respected. 
-    Whether it's rescuing a pup, feeding a stray, or spreading awareness — we're here to make tails wag and hearts melt.
-  </p>
-  <p>
-    Our mission is to turn every neighborhood into a safe and happy space for our furry friends. 
-    With your help, we can build a kinder, more compassionate world — one paw at a time. 🐕🌍
-    
-  </p>
-</section>
+<div class="chat-container">
+  <div class="chat-header">Chat Bot 🤖</div>
+  <div class="chat-box" id="chatBox">
+    <div class="message bot">Hi! 👋 I'm here to help you learn WhatsApp, Paytm, or Google Maps. Just type the app name!</div>
+  </div>
+  <div class="chat-input">
+    <input type="text" id="userInput" placeholder="Type app name or question..."/>
+    <button onclick="handleUserInput()">Send</button>
+  </div>
+</div>
 
-  <!-- Volunteer Form -->
-  <section class="volunteer" id="volunteer">
-    <h2>🐾 Become a Volunteer</h2>
-    <form>
-      <input type="text" placeholder="Full Name" required />
-      <input type="text" placeholder="City" required />
-      <select required>
-        <option value="">Role Preference</option>
-        <option value="rescuer">Rescuer</option>
-        <option value="feeder">Feeder</option>
-        <option value="social">Social Media Champ</option>
-      </select>
-      <button type="submit">Sign Up</button>
-    </form>
-  </section>
+<script>
+  const chatBox = document.getElementById('chatBox');
 
-  <!-- Impact Stories -->
-  <section class="stories" id="stories">
-    <h2>✨ Real Impact, Real Stories</h2>
-    <div class="story-cards">
-      <div class="card">
-        <h3>From Stray to Star 🌟</h3>
-        <p>Shelby was rescued from a dump and now stars in movies</p>
-        <p>you can check out the story from <span><a href="https://www.columbian.com/news/2019/mar/08/from-stray-pup-to-movie-star/">click here</a></span></p>
-      </div>
-      <div class="card">
-        <h3>Buddy Gets a Home 🏠</h3>
-        <p>Thanks to our volunteers!, </p>
-        <p>here you can check how our volunteers working <span><a href="https://www.vosd.in/campaigns/dog-shelter/">click here</a></span></p>
-      </div>
-    </div>
-  </section>
+  const tutorials = {
+    whatsapp: `
+<b>📘 WhatsApp Tutorial:</b><br>
+1. Open the app and verify your phone number.<br>
+2. Tap on any contact to start chatting.<br>
+3. Use 📎 to share files, 📞 for calls.<br>
+4. Long-press a message to reply, delete, or forward.<br>
+5. Explore 'Settings' for Privacy, Themes, and more.
+`,
+    paytm: `
+<b>💰 Paytm Guide:</b><br>
+1. Sign in with your mobile number.<br>
+2. Tap on 'Pay' to scan a QR code.<br>
+3. 'Passbook' shows transaction history.<br>
+4. Recharge phones, book tickets, pay bills from home.<br>
+5. Add bank account for UPI-based transfers.
+`,
+    maps: `
+<b>🗺️ Google Maps Help:</b><br>
+1. Open Maps and type your destination.<br>
+2. Tap 'Directions' and choose transport mode.<br>
+3. Use voice for hands-free navigation.<br>
+4. Explore nearby places like cafes, ATMs, etc.<br>
+5. Save places by tapping 'Save' icon.
+`
+  };
 
-  <!-- Contact Section -->
-  <section class="contact" id="contact">
-    <h2>📬 Get in Touch</h2>
-    <p>Email us at: <a href="mailto:hello@petfriendlycity.in">hello@petfriendlycity.in</a></p>
-  </section>
+  function addMessage(text, sender) {
+    const msg = document.createElement('div');
+    msg.classList.add('message', sender);
+    msg.innerHTML = text;
+    chatBox.appendChild(msg);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
 
-  <footer>
-    <p>Made with 🐾 by Ankit Rana Interns at CollegeTips.in</p>
-  </footer>
-  <script src="script.js"></script>
+  function handleUserInput() {
+    const input = document.getElementById('userInput');
+    const userText = input.value.trim();
+    if (!userText) return;
+
+    addMessage(userText, 'user');
+
+    const lower = userText.toLowerCase();
+    let botResponse = "❓ I can help you with WhatsApp, Paytm, or Google Maps. Please type one of them!";
+
+    if (lower.includes('whatsapp')) {
+      botResponse = tutorials.whatsapp;
+    } else if (lower.includes('paytm')) {
+      botResponse = tutorials.paytm;
+    } else if (lower.includes('google maps') || lower.includes('maps')) {
+      botResponse = tutorials.maps;
+    }
+
+    setTimeout(() => {
+      addMessage(botResponse, 'bot');
+    }, 500);
+
+    input.value = '';
+  }
+</script>
 </body>
-
 </html>
